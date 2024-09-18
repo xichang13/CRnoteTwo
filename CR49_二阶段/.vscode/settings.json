@@ -1,0 +1,5 @@
+{
+    "markdown.extension.completion.enabled": true,
+    "markdown.extension.toc.levels": "1..2",
+    "markdown.extension.toc.omittedFromToc": {},
+}
