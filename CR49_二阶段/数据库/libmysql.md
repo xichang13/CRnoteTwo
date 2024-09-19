@@ -2,19 +2,20 @@
 - [sql注入](#sql注入)
 
 # 连接数据库
+  - 头文件 `mysql.h`
   1.  初始化 `MYSQL` 结构体：使用 `mysql_init` 函数初始化 `MYSQL` 结构体。
 ``` C/C++
 MYSQL * pmysql = mysql_init(NULL);
 ```
-  2.  连接数据库：使用 `mysql_real_connect` 函数连接到数据库。
+  1.  连接数据库：使用 `mysql_real_connect` 函数连接到数据库。
 ``` C/C++
-if (mysql_real_connect(pmysql, "localhost", "root", "123456", "test", 3306, NULL, 0) == NULL) {
+if (mysql_real_connect(pmysql, "localhost", "root", "toor", "test", 3306, NULL, 0) == NULL) {
     printf("Error connecting to database: %s\n", mysql_error(pmysql));
     mysql_close(pmysql);
     return 1;
 }
 ```
-  3.  执行SQL语句：使用 `mysql_query` 函数执行 SQL 语句。
+  1.  执行SQL语句：使用 `mysql_query` 函数执行 SQL 语句。
 ``` C/C++
 if (mysql_query(pmysql, "SELECT * FROM users")) {
     printf("Error making query: %s\n", mysql_error(pmysql));
@@ -22,7 +23,7 @@ if (mysql_query(pmysql, "SELECT * FROM users")) {
     return 1;
 }
 ```
-  4.  获取结果：使用 `mysql_store_result` 函数获取查询结果，并使用 `mysql_fetch_row` 函数逐行获取结果。
+  1.  获取结果：使用 `mysql_store_result` 函数获取查询结果，并使用 `mysql_fetch_row` 函数逐行获取结果。
 ``` C/C++
 MYSQL_RES * result = mysql_store_result(pmysql);
 if (result == NULL) {
