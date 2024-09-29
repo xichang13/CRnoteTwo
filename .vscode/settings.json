@@ -1,0 +1,6 @@
+{
+    "markdown.styles": [
+        ".vscode/bronya.css"
+    ],
+    "markdown-pdf.highlightStyle": "github.css"
+}
