@@ -179,30 +179,34 @@ public void run(){
 ```
 
 ## 滚动背景图
-* 在 `onDraw` 方法中，绘制背景图，绘制完背景图后，将背景图的位置向下移动，再将移动到屏幕外的背景图重新绘制到屏幕上方。
+* 在 `onDraw` 方法中，绘制背景图，绘制完背景图后，将背景图的位置以每秒 60 帧向下移动，再将移动到屏幕外的背景图重新绘制到屏幕上方。
 ``` Java
-// 滚动背景图
-private int bgY = 0;
+// 在 onDraw 方法中，绘制背景图
 @Override
-public void run(){
+public void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
+    // 绘制背景图
+    canvas.drawBitmap(backgroundBitmap, backgroundX, backgroundY, null);
+    // 背景图向下移动
+    backgroundY += 1;
+    // 如果背景图移动到屏幕外，重新绘制到屏幕上方
+    if (backgroundY >= getHeight()) {
+        backgroundY = -getHeight();
+    }
+}
+
+// 在 run 方法中，调用 invalidate 方法，触发 onDraw 方法的调用
+public void run() {
     // 当前时间
     long currentTime = System.currentTimeMillis();
     // 每秒绘制 60 次
     while (true) {
-        if (currentTime - lastTime >= 1000 / 60) {
+        if (System.currentTimeMillis() - currentTime >= 1000 / 60) {
             // 绘制一帧
             invalidate();
             // 更新时间
-            lastTime = currentTime;
-            // 背景图向下移动
-            bgY += 1;
-            // 当背景图移动到屏幕外时，将其重新绘制到屏幕上方
-            if (bgY >= getHeight()) {
-                bgY = -getHeight();
-            }
+            currentTime = System.currentTimeMillis();
         }
-        // 当前时间
-        currentTime = System.currentTimeMillis();
     }
 }
 ```
