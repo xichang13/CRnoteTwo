@@ -116,7 +116,8 @@ protected void onDraw(Canvas canvas) {
 ```
 
 ## 触屏响应
-* 调用 `View` 的 `setOnTouchListener` 方法，设置 `View` 的触摸事件监听器，在 `onTouch` 方法中处理触摸事件。
+* 调用 `View` 的 `setOnTouchListener` 方法，设置 `View` 的触摸事件监听器，在 `onTouch` 方法中处理触摸事件，`onTouch` 方法返回 `true` 表示事件已被处理，`onTouch` 方法返回 `false` 表示事件未被处理。
+
 ``` Java
 // 设置监听器
 public class MyView extends View {
@@ -127,10 +128,20 @@ public class MyView extends View {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        Log.v("MyView", "onTouch" + event.toString());
+
         // 处理触摸事件
-        float x = event.getX();
-        float y = event.getY();
-        // 在这里进行相应的操作，比如移动或缩放图形
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Log.v("MyView", "ACTION_DOWN x:" + event.getX() + " y:" + event.getY());
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.v("MyView", "ACTION_MOVE x:" + event.getX() + " y:" + event.getY());
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.v("MyView", "ACTION_UP x:" + event.getX() + " y:" + event.getY());
+                break;
+        }
         return true;
     }
 }
