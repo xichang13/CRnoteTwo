@@ -2,16 +2,20 @@
 # Windows NDK环境
 
 在 Android Studio 中下载 NDK。
-将 ndk 的 bin 目录添加到环境变量中。 `%ANDROID_NDK%\toolchains\llvm\prebuilt\windows-x86_64\bin`
+将 ndk 的 bin 目录添加到环境变量中。
+
+`%ANDROID_NDK%\toolchains\llvm\prebuilt\windows-x86_64\bin`
 
 新建 `hello.c` 文件，输出 `Hello, world!` 。
 
 使用 `aarch64-linux-android21-clang.cmd hello.c` 编译。
 
 使用 `adb push` 将编译后的 `a.out` 文件推送到手机 `/data/local/tmp` 目录。
+
 `adb push a.out /data/local/tmp`
 
 使用 `adb shell` 进入手机的命令行，添加执行权限 `chmod +x a.out` ，运行 `./a.out` 。
+
 `adb shell`
 `cd /data/local/tmp`
 `chmod +x a.out`
