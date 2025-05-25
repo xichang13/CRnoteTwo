@@ -12,17 +12,17 @@
 # 安装 `Android Studio`
 下载网址： https://developer.android.google.cn/studio?hl=zh-cn
 
-# 输入出厂镜像
+# 刷入出厂镜像
 1. 下载镜像： https://developers.google.com/android/images?hl=zh-cn
 2. 解压镜像： `sailfish-opm1.171019.011-factory-56d15350.zip`
 3. 连接手机运行 `adb reboot bootloader` 命令 -> 运行解压后的 `flash-all.bat` 脚本
 4. 运行 `fastboot reboot` 命令重启手机 -> 刷入成功
 
-# 刷入 `twrp`
+# 下载 `twrp`
 下载地址： https://twrp.me/Devices/
 下载 `twrp` ： https://dl.twrp.me/sailfish/twrp-3.3.0-0-sailfish.images
 
-# 安装面具获取 root 权限：
+# 刷入面具获取 root 权限：
 1. 下载 `Magisk` 安装包 ： https://magiskcn.com/magisk-download
 2. 运行 `adb push magisk-v27.0.zip /sdcard/magisk.zip` 命令将 `Magisk` 安装包推送到手机
 3. 运行 `adb reboot bootloader` 命令 -> 运行 `fastboot boot recovery twrp-3.3.0-0-sailfish.img` 命令使用 `twrp` 镜像

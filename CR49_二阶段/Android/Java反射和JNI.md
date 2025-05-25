@@ -37,18 +37,26 @@ public class CFoo {
 
 // 获取类对象
 Class cFooClass = Class.forName("com.example.CFoo");
+
 // 创建实例 - 无参数构造函数
 CFoo cFooObj = (CFoo)cFooClass.newInstance();
+
 // 创建示例 - 带参数构造函数
 Constructor constructor = CFoo.getConstructor(String.class);
 CFoo cFooObj2 = (CFoo)constructor.newInstance("hello");
+
 // 调用方法
 Method method = cFooClass.getMethod("foo");
 method.invoke(cFooObj);
-method.invoke(cFooObj2, "world");
+
+// 调用带参数的方法
+Method method2 = cFooClass.getMethod("foo", String.class);
+method2.invoke(cFooObj, "world");
+
 // 获取属性值
 Field field = cFooClass.getField("n");
 int n = (int)field.get(cFooObj);
+
 // 设置属性值
 field.set(cFooObj, 20);
 ```
@@ -196,13 +204,28 @@ JNIEXPORT void JNICALL
 Java_com_example_jnitest_MainActivity_reflectObject(JNIEnv *env, jobject thiz) {
     // 获取类对象
     jclass cFooClass = env->FindClass("com/example/CFoo");
+
     // 创建实例 - 无参数构造函数
     jobject cFooObj = env->NewObject(cFooClass, env->GetMethodID(cFooClass, "<init>", "()V"));
+
     // 调用方法 GetMethodID 第一个参数是类对象，第二个参数是方法名，第三个参数是方法签名
     jmethodID methodId = env->GetMethodID(cFooClass, "foo", "()V");
     env->CallVoidMethod(cFooObj, methodId);
+
+    // 调用带参数和返回值的方法
+    jmethodID methodId2 = env->GetMethodID(cFooClass, "foo", "(Ljava/lang/String;)Ljava/lang/String;");
+    jstring str = env->NewStringUTF("world");
+    jstring result = (jstring)env->CallObjectMethod(cFooObj, methodId2, str);
+    const char *sz = env->GetStringUTFChars(result, nullptr);
+    std::string str_cpp = sz;
+    // 打印日志
+    __android_log_print(ANDROID_LOG_VERBOSE, "JNITest", "reflectObject: %s", str_cpp.c_str());
+    // 释放 Java 字符串
+    env->ReleaseStringUTFChars(result, sz);
+
     // 释放实例
     env->DeleteLocalRef(cFooObj);
+
     // 释放类对象
     env->DeleteLocalRef(cFooClass);
     return;
